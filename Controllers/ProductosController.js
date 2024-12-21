@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { ProductoRepository } from "../Repositories/productoRepository.js";
 
 export class ProductoController {
@@ -27,4 +28,41 @@ export class ProductoController {
             res.status(500).send("error" + err.message)
         }
     }
+
+    static async vincularProveedor(req, res) {
+        const {productoID, proveedorID} = req.body
+
+        try{
+            const resultado = await ProductoRepository.vincularProveedor(productoID, proveedorID)
+            res.status(200).send(resultado);
+        }catch(err){
+            res.status(400).json({ error: err.message });
+        }
+    }
+
+    static async eliminarProducto(req, res) {
+        const { productoId } = req.params; 
+        
+       
+        if (!mongoose.Types.ObjectId.isValid(productoId)) {
+            return res.status(400).json({ error: "ID de producto no válido" });
+        }
+        
+        try {
+           
+            const resultado = await ProductoRepository.eliminarProducto(productoId);
+            
+            
+            if (!resultado) {
+                return res.status(404).json({ error: "Producto no encontrado" });
+            }
+            
+            res.status(200).json({ mensaje: "Producto eliminado correctamente", resultado });
+        } catch (err) {
+            
+            res.status(400).json({ error: err.message });
+        }
+    }
+    
+    
 }

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Proveedor from "../models/Proveedor.js"
+import {Proveedor} from "../models/Proveedor.js"
 
 export class ProveedorRepository{
     static async crearProveedor(proveedorData){
