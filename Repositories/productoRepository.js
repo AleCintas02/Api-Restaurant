@@ -47,20 +47,32 @@ export class ProductoRepository {
 
     static async eliminarProducto(productoID) {
         try {
-            const productoEliminar = await Producto.findById(productoID);
-    
-            if (!productoEliminar) {
-                throw new Error("Producto no encontrado");
+            if(!mongoose.Types.ObjectId.isValid(productoID)){
+                throw new Error("ID del producto no valida")
             }
-    
-        
-            await Producto.deleteOne({ _id: productoID });
-    
-            return productoEliminar; 
-    
+
+            const resultado = await Producto.deleteOne({_id: productoID})
+
+            if(resultado === 0 ){
+                throw new Error("Producto no encontrado")
+            }
         } catch (err) {
-            throw new Error("Error al eliminar el producto: " + err.message);
+             throw new Error("error al eliminar producto: " + err.message) 
         }
     }
-    
+
+    static async editarProducto(productoID, productData) {
+        try{
+            const productoEditar = await Producto.findById(productoID)
+            if(!productoEditar){
+                throw new Error("Producto no encontrado")
+            }
+            const resultado = await productoEditar.updateOne(productData)
+
+            return resultado
+        }catch(err){
+            throw new Error("error: " + err.message)
+        }
+    }
+
 }

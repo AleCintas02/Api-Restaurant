@@ -28,6 +28,8 @@ app.get('/productos', authenticateToken, ProductoController.listarProductos);
 app.post('/productos-agregar', authenticateToken, ProductoController.crearProducto);
 app.post('/productos/vincular', authenticateToken, ProductoController.vincularProveedor)
 app.delete('/productos/:productoID', authenticateToken, ProductoController.eliminarProducto)
+app.put('/productos/:productoID', authenticateToken, ProductoController.editarProducto)
+
 
 //proveedores
 app.get('/proveedores', authenticateToken, ProveedorController.listarProveedores);

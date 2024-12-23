@@ -41,26 +41,27 @@ export class ProductoController {
     }
 
     static async eliminarProducto(req, res) {
-        const { productoId } = req.params; 
-        
-       
-        if (!mongoose.Types.ObjectId.isValid(productoId)) {
-            return res.status(400).json({ error: "ID de producto no válido" });
+        try{
+            const productoEliminar = req.params.productoID;
+            const resultado = await ProductoRepository.eliminarProducto(productoEliminar);
+            return res.status(200).json({mensaje: "producto eliminado ", resultado})
+        }catch(err){
+            return res.status(500).json({error: err.message})
         }
-        
-        try {
-           
-            const resultado = await ProductoRepository.eliminarProducto(productoId);
+    }
+
+
+    static async editarProducto(req, res){
+        try{
+            const productoID = req.params.productoID
+            const datosProducto = req.body
             
-            
-            if (!resultado) {
-                return res.status(404).json({ error: "Producto no encontrado" });
-            }
-            
-            res.status(200).json({ mensaje: "Producto eliminado correctamente", resultado });
-        } catch (err) {
-            
-            res.status(400).json({ error: err.message });
+            const produnctoActualizado = await ProductoRepository.editarProducto(productoID, datosProducto)
+
+            return res.status(201).json({mensaje: "Producto editado", producto: produnctoActualizado})
+
+        }catch(err){
+            return res.status(500).json({error : err.message})
         }
     }
     
