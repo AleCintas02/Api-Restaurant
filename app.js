@@ -27,8 +27,9 @@ app.post('/logout', logout)
 app.get('/productos', authenticateToken, ProductoController.listarProductos);
 app.post('/productos-agregar', authenticateToken, ProductoController.crearProducto);
 app.post('/productos/vincular', authenticateToken, ProductoController.vincularProveedor)
-app.delete('/productos/:productoID', authenticateToken, ProductoController.eliminarProducto)
-app.put('/productos/:productoID', authenticateToken, ProductoController.editarProducto)
+app.delete('/productos-eliminar/:productoID', authenticateToken, ProductoController.eliminarProducto)
+app.put('/productos-editar/:productoID', authenticateToken, ProductoController.editarProducto)
+app.get('/productos-buscar/:productoID', authenticateToken, ProductoController.buscarProducto)
 
 
 //proveedores

@@ -63,15 +63,41 @@ export class ProductoRepository {
 
     static async editarProducto(productoID, productData) {
         try{
-            const productoEditar = await Producto.findById(productoID)
-            if(!productoEditar){
+            if(!mongoose.Types.ObjectId.isValid(productoID)){
+                throw new Error("ID del producto no es válido");
+            }
+
+            const productoActualizado = await Producto.findByIdAndUpdate(productoID, productData, {new: true, runValidators: true})
+
+            if(!productoActualizado){
+                throw new Error("Producto no encontrado");
+            }
+
+            return productoActualizado
+
+        }catch(err){
+            throw new Error("error al editar: " + err.message)
+        }
+    }
+
+
+    static async buscarProducto(productoID){
+        try{
+
+            if(!mongoose.Types.ObjectId.isValid(productoID)){
+                throw new Error("Id no valido")
+            }
+
+            const producto = await Producto.findById(productoID)
+
+            if(!producto){
                 throw new Error("Producto no encontrado")
             }
-            const resultado = await productoEditar.updateOne(productData)
 
-            return resultado
+            return producto
+
         }catch(err){
-            throw new Error("error: " + err.message)
+            throw new Error("Error: " + err.message)
         }
     }
 

@@ -64,6 +64,19 @@ export class ProductoController {
             return res.status(500).json({error : err.message})
         }
     }
+
+    static async buscarProducto(req, res){
+        try{
+            const productoID = req.params.productoID
+
+            const resultado = await ProductoRepository.buscarProducto(productoID)
+
+            return res.status(201).json({producto: resultado})
+
+        }catch(err){
+            return res.status(500).json({error: err.message})
+        }
+    }
     
     
 }
