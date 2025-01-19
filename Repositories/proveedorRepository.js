@@ -15,6 +15,7 @@ export class ProveedorRepository{
     static async listarProveedores(){
         try{
             const proveedores = await Proveedor.find()
+            
             return proveedores;
         }catch(err){
             throw new Error("Error al listar el proveedores" + err.message)

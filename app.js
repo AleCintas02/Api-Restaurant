@@ -30,6 +30,7 @@ app.post('/productos/vincular', authenticateToken, ProductoController.vincularPr
 app.delete('/productos-eliminar/:productoID', authenticateToken, ProductoController.eliminarProducto)
 app.put('/productos-editar/:productoID', authenticateToken, ProductoController.editarProducto)
 app.get('/productos-buscar/:productoID', authenticateToken, ProductoController.buscarProducto)
+app.get('/informe-stock/:stock', authenticateToken, ProductoController.informeStock)
 
 
 //proveedores

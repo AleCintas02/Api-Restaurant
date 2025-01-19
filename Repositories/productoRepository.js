@@ -80,7 +80,6 @@ export class ProductoRepository {
         }
     }
 
-
     static async buscarProducto(productoID){
         try{
 
@@ -98,6 +97,23 @@ export class ProductoRepository {
 
         }catch(err){
             throw new Error("Error: " + err.message)
+        }
+    }
+
+    static async informeStock(stock){
+        try {
+          const productos = await Producto.find()
+            const informe = []
+            productos.forEach(producto => {
+                if(producto.cantidad <= stock){
+                    informe.push({producto: producto.nombre, stock:producto.cantidad})
+                }
+            });
+
+            return informe
+
+        } catch (error) {
+            
         }
     }
 
